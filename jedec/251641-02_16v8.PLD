@@ -1,0 +1,48 @@
+Name     C16PLA16v8v3 ;
+PartNo   251641-02_16V8 ;
+Date     11-6-2020 ;
+Revision 01 ;
+Designer Daniel Mantione ;
+Company  Home Computing Labs ;
+Assembly None ;
+Location  ;
+Device   g16v8ma ;
+
+/* *************** INPUT PINS *********************/
+
+pin 1  = i_affxx;
+pin 2  = i_a7;     /* 82S100 3 */
+pin 3  = i_a6;     /* 82S100 4 */
+pin 4  = i_a5;     /* 82S100 5 */
+pin 5  = i_a4;     /* 82S200 6 */
+pin 6  = i_phi0;   /* 82S100 8 */
+pin 7  = i_mux;    /* 82S100 27 */
+pin 8  = i_a9;     /* 82S100 24 */
+pin 9  = i_ras;    /* 82S100 20 */
+pin 11 = i_a8;     /* 82S100 25 */
+
+
+/* *************** OUTPUT PINS *********************/
+
+pin 12 = o_acia;
+pin 13 = o_spi_user;
+pin 14 = o_phi2;
+/*pin 15 = o_f0;*/
+pin 16 = o_addrclk;
+pin 17 = o_spi_keyb;
+pin 18 = o_f7;
+pin 19 = o_kernal;
+
+!o_phi2 = !(!i_ras & i_phi0 & o_f7);
+
+o_spi_user = !(!i_ras & i_affxx & !i_a9 & i_a8 & !i_a7 & !i_a6 & !i_a5 & i_a4 & i_phi0 & o_f7);
+
+o_acia = !(!i_ras & i_affxx & !i_a9 & i_a8 & !i_a7 & !i_a6 & !i_a5 & !i_a4 & i_phi0);
+
+o_addrclk = !(!i_ras & i_affxx & !i_a9 & i_a8 & i_a7 & i_a6 & !i_a5 & i_a4 & i_phi0 & o_f7);
+
+o_spi_keyb = !(!i_ras & i_affxx & !i_a9 & i_a8 & !i_a7 & !i_a6 & i_a5 & i_a4 & i_phi0 & o_f7);
+
+!o_kernal = !(i_affxx & !i_a9 & !i_a8);
+
+!o_f7 = !( i_mux # (!i_ras & i_phi0 & o_f7));
